@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario Moderno</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .form-container {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 400px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #333;
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #444;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #4facfe;
+      box-shadow: 0 0 4px rgba(79, 172, 254, 0.6);
+    }
+    button {
+      width: 100%;
+      padding: 0.9rem;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      opacity: 0.9;
+    }
+    .success {
+      text-align: center;
+      color: green;
+      margin-top: 1rem;
+    }
+    .error {
+      text-align: center;
+      color: red;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Registro</h2>
+    <form id="registroForm">
+      <div class="form-group">
+        <label for="nombre">Nombre *</label>
+        <input type="text" id="nombre" name="nombre" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email *</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="telefono">Teléfono *</label>
+        <input type="tel" id="telefono" name="telefono" required>
+      </div>
+      <div class="form-group">
+        <label for="ciudad">Ciudad *</label>
+        <input type="text" id="ciudad" name="ciudad" required>
+      </div>
+      <div class="form-group">
+        <label for="comentario">Comentario</label>
+        <textarea id="comentario" name="comentario" rows="3"></textarea>
+      </div>
+      <button type="submit">Enviar</button>
+      <div id="mensaje"></div>
+    </form>
+  </div>
+
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbz52nDekIddisNYe2J11_XRR9vr19Lc1XwjBKLGp160W7vtxaYrZVy_ui4WfKlteIbkCQ/exec"; // <- Reemplaza con la URL del Apps Script desplegado
+    const form = document.getElementById("registroForm");
+    const mensaje = document.getElementById("mensaje");
+
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      fetch(scriptURL, { method: "POST", body: new FormData(form)})
+        .then(response => {
+          mensaje.innerHTML = "<p class='success'>Datos enviados correctamente ✅</p>";
+          form.reset();
+        })
+        .catch(error => {
+          mensaje.innerHTML = "<p class='error'>Error al enviar los datos ❌</p>";
+          console.error("Error!", error.message);
+        });
+    });
+  </script>
+</body>
+</html>
